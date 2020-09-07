@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SolarCoffee.Services.Product;
+using SolarCoffee.Web.Serialization;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
-namespace SolarCoffee.Web
+namespace SolarCoffee.Web.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -20,8 +22,9 @@ namespace SolarCoffee.Web
         public ActionResult GetProduct()
         {
             _logger.LogInformation("Getting all products");
-            _productService.GetAllProducts();
-            return Ok("");
+            var products = _productService.GetAllProducts();
+            var productViewModel = products.Select(x => ProductMapper.SerializeProductModel(x));
+            return Ok(products);
 
         }
     }
