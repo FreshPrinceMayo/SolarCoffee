@@ -7,7 +7,7 @@ namespace SolarCoffee.Data.Models
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedTime { get; set; }
+        public DateTime UpdatedDate { get; set; }
         [MaxLength(100)]
         public string AddressLine1 { get; set; }
         [MaxLength(100)]

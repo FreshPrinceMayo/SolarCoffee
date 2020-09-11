@@ -6,13 +6,13 @@ namespace SolarCoffee.Web.Serialization
 {
     public static class ProductMapper
     {
-        public static ProductModel SerializeProductModel(Product product)
+        public static ProductViewModel SerializeProductModel(Product product)
         {
-            return new ProductModel
+            return new ProductViewModel
             {
                 Id = product.Id,
                 CreatedDate = product.CreatedDate,
-                UpdatedTime = product.UpdatedTime,
+                UpdatedTime = product.UpdatedDate,
                 Price = product.Price,
                 Description = product.Description,
                 IsArchived = product.IsArchived,
@@ -22,13 +22,13 @@ namespace SolarCoffee.Web.Serialization
         }
 
 
-        public static Product SerializeProductModel(ProductModel product)
+        public static Product SerializeProductModel(ProductViewModel product)
         {
             return new Product
             {
                 Id = product.Id,
                 CreatedDate = product.CreatedDate,
-                UpdatedTime = product.UpdatedTime,
+                UpdatedDate = product.UpdatedTime,
                 Price = product.Price,
                 Description = product.Description,
                 IsArchived = product.IsArchived,

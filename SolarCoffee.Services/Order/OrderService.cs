@@ -78,7 +78,7 @@ namespace SolarCoffee.Services.Order
             {
                 var salesOrder = _db.SalesOrders.Find(id);
                 salesOrder.IsPaid = true;
-                salesOrder.UpdatedTime = now;
+                salesOrder.UpdatedDate = now;
                 _db.SalesOrders.Update(salesOrder);
                 _db.SaveChanges();
 

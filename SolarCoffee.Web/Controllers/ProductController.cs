@@ -27,5 +27,14 @@ namespace SolarCoffee.Web.Controllers
             return Ok(products);
 
         }
+
+        [HttpPatch("/api/product/{id}")]
+        public ActionResult ArchiveProduct(int id)
+        {
+            _logger.LogInformation("Archive product");
+            var archiveResult = _productService.ArchiveProduct(id);
+            return Ok(archiveResult);
+
+        }
     }
 }
