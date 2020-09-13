@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SolarCoffee.Data.Models;
-using System.Runtime.CompilerServices;
 
 namespace SolarCoffee.Services.Product
 {

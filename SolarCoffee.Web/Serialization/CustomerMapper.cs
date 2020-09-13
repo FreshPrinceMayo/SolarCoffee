@@ -1,6 +1,5 @@
 ﻿using SolarCoffee.Data.Models;
 using SolarCoffee.Web.ViewModels;
-using System;
 using System.Collections.Generic;
 
 namespace SolarCoffee.Web.Serialization

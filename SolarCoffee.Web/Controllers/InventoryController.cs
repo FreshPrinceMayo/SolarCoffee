@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SolarCoffee.Services.Inventory;
 using SolarCoffee.Web.Serialization;
@@ -33,6 +29,8 @@ namespace SolarCoffee.Web.Controllers
         [HttpPatch("/api/inventory")]
         public IActionResult UpdateInventory([FromBody] ShipmentModel shipment)
         {
+            _logger.LogInformation($"Updating product : {shipment.ProductId} by quantity {shipment.Adjustment}");
+
             var response = _inventoryService.UpdateUnitsAvailable(shipment.ProductId, shipment.Adjustment);
             return Ok(response);
         }

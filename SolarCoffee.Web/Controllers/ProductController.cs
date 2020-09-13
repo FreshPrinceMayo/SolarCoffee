@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using SolarCoffee.Services.Product;
 using SolarCoffee.Web.Serialization;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SolarCoffee.Web.Controllers
 {
