@@ -17,6 +17,11 @@ namespace SolarCoffee.Services.Customer
         {
             try
             {
+                customer.CreatedDate = DateTime.Now;
+                customer.UpdatedDate = DateTime.Now;
+                customer.PrimaryAddress.CreatedDate = DateTime.Now;
+                customer.PrimaryAddress.UpdatedDate = DateTime.Now;
+
                 _db.Customers.Add(customer);
                 _db.SaveChanges();
 

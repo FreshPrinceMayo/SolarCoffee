@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SolarCoffee.Data;
+using SolarCoffee.Services.Customer;
 using SolarCoffee.Services.Inventory;
 using SolarCoffee.Services.Order;
 using SolarCoffee.Services.Product;
@@ -38,6 +39,7 @@ namespace SolarCoffee.Web
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

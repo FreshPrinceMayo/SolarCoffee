@@ -6,8 +6,8 @@ namespace SolarCoffee.Web.ViewModels
     public class CustomerViewModel
     {
         public int Id { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
         [MaxLength(32)]
         public string FirstName { get; set; }
         [MaxLength(32)]
@@ -19,7 +19,7 @@ namespace SolarCoffee.Web.ViewModels
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedTime { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }

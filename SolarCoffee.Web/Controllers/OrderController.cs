@@ -24,13 +24,31 @@ namespace SolarCoffee.Web.Controllers
             _customerService = customerService;
         }
 
-        [HttpPost("/api/Invoice")]
+        [HttpPost("/api/invoice")]
         public IActionResult GenerateNewOrder([FromBody] InvoiceViewModel invoice)
         {
-            _logger.LogInformation("");
+            _logger.LogInformation("Generaring Invoice");
             var order = OrderMapper.SeralizeInvoiceToOrder(invoice);
             order.Customer = _customerService.GetById(invoice.CustomerId);
+            _orderService.GenerateOpenOrder(order);
             return Ok("");
+        }
+
+        [HttpPost("/api/order")]
+        public IActionResult GetOrders()
+        {
+            _logger.LogInformation("Get Orders");
+            var orders = _orderService.GetOrders();
+            var orderViewModels = OrderMapper.SeralizeOrdersViewModels(orders);
+            return Ok(orderViewModels);
+        }
+
+
+        [HttpPatch("/api/order/complete/{id}")]
+        public ActionResult MarkOrderComplete(int id)
+        {
+            var response = _orderService.MarkFulfilled(id);
+            return Ok(response);
         }
     }
 }

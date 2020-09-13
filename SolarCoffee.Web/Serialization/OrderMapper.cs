@@ -31,8 +31,8 @@ namespace SolarCoffee.Web.Serialization
             return orders.Select(x => new OrderViewModel
             {
                 Id = x.Id,
-                CreatedOn = DateTime.UtcNow,
-                UpdatedOn = DateTime.UtcNow,
+                CreatedDate = x.CreatedDate,
+                UpdatedDate = x.UpdatedDate,
                 SalesOrderItems = SerializeSalesOrderItems(x.SalesOrderItems),
                 Customer = CustomerMapper.SerializeCustomer(x.Customer),
                 IsPaid = false
