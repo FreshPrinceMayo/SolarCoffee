@@ -1,9 +1,21 @@
 <template>
   <div class="side-menu-container">
-    <img id="logo" alt="logo" src="../assets/images/logo.png" />
+    <router-link to="/">
+      <img id="logo" alt="logo" src="../assets/images/logo.png" />
+    </router-link>
+
     <h1>Management Portal</h1>
-    <solar-button :link="'/inventory'" id="menuInventory">
+    <solar-button :link="'/inventory'" id="menuInventory" is-full-width>
       Inventory
+    </solar-button>
+    <solar-button :link="'/customers'" id="menuCustomer" is-full-width>
+      Manage Customers
+    </solar-button>
+    <solar-button :link="'/invoice/new'" id="menuInvoice" is-full-width>
+      New Invoice
+    </solar-button>
+    <solar-button :link="'/orders'" id="menuOrders" is-full-width>
+      Orders
     </solar-button>
   </div>
 </template>

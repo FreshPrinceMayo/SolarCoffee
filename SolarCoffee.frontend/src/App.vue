@@ -49,8 +49,9 @@ export default class App extends Vue {}
 a {
   text-decoration: none;
 }
+
 hr {
-  border: 1px solid #eee;
+  border: 2px solid gray;
   margin: 1rem 0;
 }
 
