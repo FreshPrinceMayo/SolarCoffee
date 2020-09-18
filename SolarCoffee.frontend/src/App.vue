@@ -54,5 +54,4 @@ hr {
   border: 2px solid gray;
   margin: 1rem 0;
 }
-
 </style>
