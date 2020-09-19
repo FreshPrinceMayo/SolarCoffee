@@ -1,5 +1,5 @@
 <template>
-  <transition name="modla-fade">
+  <transition name="modal-fade">
     <div
       class="modal"
       role="dialog"
@@ -35,7 +35,7 @@ export default class ShipmentModal extends Vue {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 @import "@/scss/global.scss";
 .modal-backdrop {
   position: fixed;
