@@ -51,7 +51,7 @@ namespace SolarCoffee.Services.Inventory
             {
                 var inventory = _db.ProductInventories
                .Include(x => x.Product)
-               .FirstOrDefault(x => x.Product.Id == id);
+               .FirstOrDefault(x => x.Id == id);
 
                 inventory.QuantityOnHand += adjustment;
 

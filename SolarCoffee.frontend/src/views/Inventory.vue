@@ -97,10 +97,10 @@ export default class Inventory extends Vue {
     this.closeModals();
   }
 
-  saveNewShipment(shipment: IShipment) {
-    console.log("SaveNewShipment");
-    console.log(shipment);
+  async saveNewShipment(shipment: IShipment) {
+    await inventoryService.updateInventoryQuantity(shipment);
     this.closeModals();
+    await this.initialize();
   }
 
   async initialize() {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {IProductInventory} from "@/types/Product";
+import { IShipment } from "@/types/Shipment";
 
 export class InventoryService {
     // const API_URL = "https://localhost:5000/api";
@@ -10,6 +11,13 @@ export class InventoryService {
 
         console.log(result);
 
+        return result.data;
+    }
+
+    public async updateInventoryQuantity(shipment : IShipment)
+    {
+        let result = await axios.patch(`https://localhost:5001/api/inventory/`,shipment);
+        console.log(result);
         return result.data;
     }
 }

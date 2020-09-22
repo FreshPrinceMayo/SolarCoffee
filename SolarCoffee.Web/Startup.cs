@@ -9,6 +9,7 @@ using SolarCoffee.Services.Customer;
 using SolarCoffee.Services.Inventory;
 using SolarCoffee.Services.Order;
 using SolarCoffee.Services.Product;
+using Newtonsoft.Json.Serialization;
 using System.IO;
 
 namespace SolarCoffee.Web
@@ -29,7 +30,14 @@ namespace SolarCoffee.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opts =>
+            {
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
+            });
+
             services.AddDbContext<SolarDbContext>(options =>
             {
                 options.EnableDetailedErrors();
