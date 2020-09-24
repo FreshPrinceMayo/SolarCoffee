@@ -82,7 +82,7 @@ export default class ProductModal extends Vue {
     this.$emit("close");
   }
 
-  svae() {
+  save() {
     this.$emit("save:product", this.newProduct);
   }
 }

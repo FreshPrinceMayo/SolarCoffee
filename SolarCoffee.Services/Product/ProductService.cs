@@ -19,7 +19,6 @@ namespace SolarCoffee.Services.Product
             {
                 var product = _db.Products.Find(id);
                 product.IsArchived = true;
-                _db.Products.Add(product);
                 _db.SaveChanges();
 
                 return new ServiceResponse<Data.Models.Product>
