@@ -6,7 +6,7 @@
     <hr />
 
     <div class="customer-actions">
-      <solar-button id="addNewBtn">
+      <solar-button id="addNewBtn" @click.native="showCustomerModal">
         Add new Customer
       </solar-button>
     </div>
@@ -35,6 +35,14 @@
         </td>
       </tr>
     </table>
+
+    <customer-modal
+      v-if="isCustomerVisible"
+      :customer="customer"
+      @save:customer="saveNewCustomer"
+      @close="closeModals"
+      @click="showCustomerModal"
+    />
   </div>
 </template>
 
@@ -43,14 +51,16 @@ import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "@/components/SolarButton.vue";
 import { ICustomer, ICustomerAddress } from "@/types/Customer";
 import { CustomerService } from "@/services/customer-service";
+import CustomerModal from "@/components/modals/CustomerModal.vue";
 
 const customerService = new CustomerService();
 
 @Component({
   name: "Customer",
-  components: { SolarButton }
+  components: { SolarButton, CustomerModal }
 })
 export default class Customer extends Vue {
+  isCustomerVisible = false;
   customers: ICustomer[] = [];
 
   async initialize() {
@@ -59,6 +69,19 @@ export default class Customer extends Vue {
 
   async created() {
     await this.initialize();
+  }
+
+  async saveNewCustomer(newCustomer: ICustomer) {
+    this.isCustomerVisible = false;
+    await this.initialize();
+  }
+
+  showCustomerModal() {
+    this.isCustomerVisible = true;
+  }
+
+  closeModals() {
+    this.isCustomerVisible = false;
   }
 }
 </script>
