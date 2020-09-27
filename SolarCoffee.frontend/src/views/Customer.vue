@@ -31,7 +31,10 @@
         <td>{{ customer.primaryAddress.State }}</td>
         <td>{{ customer.created }}</td>
         <td>
-          <div class="lni lni-cross-circle customer-archive"></div>
+          <div
+            class="lni lni-cross-circle customer-archive"
+            @click="deleteCustomer(customer.id)"
+          ></div>
         </td>
       </tr>
     </table>
@@ -39,7 +42,7 @@
     <customer-modal
       v-if="isCustomerVisible"
       :customer="customer"
-      @save:customer="saveNewCustomer"
+      @save:customer="saveCustomer"
       @close="closeModals"
       @click="showCustomerModal"
     />
@@ -49,7 +52,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "@/components/SolarButton.vue";
-import { ICustomer, ICustomerAddress } from "@/types/Customer";
+import { ICustomer } from "@/types/Customer";
 import { CustomerService } from "@/services/customer-service";
 import CustomerModal from "@/components/modals/CustomerModal.vue";
 
@@ -71,7 +74,14 @@ export default class Customer extends Vue {
     await this.initialize();
   }
 
-  async saveNewCustomer(newCustomer: ICustomer) {
+  async saveCustomer(customer: ICustomer) {
+    const result = await customerService.save(customer);
+    this.isCustomerVisible = false;
+    await this.initialize();
+  }
+
+  async deleteCustomer(customerId: number) {
+    const result = await customerService.delete(customerId);
     this.isCustomerVisible = false;
     await this.initialize();
   }
