@@ -1,7 +1,7 @@
 export interface ICustomer {
   id: number;
-  createdOn: Date;
-  updatedOn?: Date;
+  createdDate: Date;
+  updatedDate?: Date;
   firstName: string;
   lastName: string;
   primaryAddress: ICustomerAddress;
@@ -9,8 +9,8 @@ export interface ICustomer {
 
 export interface ICustomerAddress {
   id: number;
-  createdOn: Date;
-  updatedOn?: Date;
+  createdDate: Date;
+  updatedDate?: Date;
   addressLine1: string;
   addressLine2: string;
   city: string;

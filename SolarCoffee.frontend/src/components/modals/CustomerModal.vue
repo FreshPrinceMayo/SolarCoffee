@@ -94,14 +94,14 @@ import { ICustomer } from "@/types/Customer";
 export default class CustomerModal extends Vue {
   customer: ICustomer = {
     id: 0,
-    createdOn: new Date(),
-    updatedOn: new Date(),
+    createdDate: new Date(),
+    updatedDate: new Date(),
     firstName: "",
     lastName: "",
     primaryAddress: {
       id: 0,
-      createdOn: new Date(),
-      updatedOn: new Date(),
+      createdDate: new Date(),
+      updatedDate: new Date(),
       addressLine1: "",
       addressLine2: "",
       city: "",

@@ -28,8 +28,8 @@
               customer.primaryAddress.addressLine2
           }}
         </td>
-        <td>{{ customer.primaryAddress.State }}</td>
-        <td>{{ customer.created }}</td>
+        <td>{{ customer.primaryAddress.state }}</td>
+        <td>{{ customer.createdDate | humanizeDate }}</td>
         <td>
           <div
             class="lni lni-cross-circle customer-archive"
@@ -75,13 +75,13 @@ export default class Customer extends Vue {
   }
 
   async saveCustomer(customer: ICustomer) {
-    const result = await customerService.save(customer);
+    const result: any = await customerService.save(customer);
     this.isCustomerVisible = false;
     await this.initialize();
   }
 
   async deleteCustomer(customerId: number) {
-    const result = await customerService.delete(customerId);
+    const result: any = await customerService.delete(customerId);
     this.isCustomerVisible = false;
     await this.initialize();
   }
