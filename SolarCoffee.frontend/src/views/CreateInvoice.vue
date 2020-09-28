@@ -23,11 +23,21 @@
     </div>
 
     <div class="invoice-step" v-if="invoiceStep === 2">
-      <p>hello</p>
+      <p>setp 2</p>
     </div>
 
     <div class="invoice-step" v-if="invoiceStep === 3">
-      <p>hello</p>
+      <p>step 3</p>
+    </div>
+    <hr />
+    <div class="invoice-step-actions">
+      <solar-button @button:click="prev" :disabled="!canGoPrev">
+        Previous
+      </solar-button>
+      <solar-button @button:click="next" :disabled="!canGoNext">
+        Next
+      </solar-button>
+      <solar-button @button:click="statOver">Start Over</solar-button>
     </div>
   </div>
 </template>
@@ -40,13 +50,17 @@ import { ICustomer } from "@/types/Customer";
 import { IInvoice, ILineItem } from "@/types/Invoice";
 import { IProductInventory } from "@/types/Product";
 import { Component, Vue } from "vue-property-decorator";
+import SolarButton from "@/components/SolarButton.vue";
 
 const customerService = new CustomerService();
 const inventoryService = new InventoryService();
 const invoiceService = new InvoiceService();
 
 @Component({
-  name: "Create Invoice"
+  name: "Create Invoice",
+  components: {
+    SolarButton
+  }
 })
 export default class CreateInvoice extends Vue {
   invoiceStep = 1;
@@ -70,6 +84,39 @@ export default class CreateInvoice extends Vue {
   async created() {
     this.initialize();
   }
+  prev() {
+    if (this.invoiceStep === 1) {
+      return;
+    }
+    this.invoiceStep -= 1;
+  }
+
+  next() {
+    if (this.invoiceStep === 3) {
+      return;
+    }
+    this.invoiceStep += 1;
+  }
+
+  get canGoNext() {
+    if (this.invoiceStep === 1) {
+      return this.selectedCustomerId !== 0;
+    }
+
+    if (this.invoiceStep === 2) {
+      return true;
+    }
+
+    if (this.invoiceStep === 3) {
+      return false;
+    }
+
+    return false;
+  }
+
+  canGoPrev() {}
+
+  startOver() {}
 }
 </script>
 
