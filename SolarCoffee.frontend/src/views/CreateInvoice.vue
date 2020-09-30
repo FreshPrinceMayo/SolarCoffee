@@ -83,9 +83,9 @@
       </div>
     </div>
 
-   <div class="invoice-step" v-if="invoiceStep === 3">
+    <div class="invoice-step" v-if="invoiceStep === 3">
       <h2>Step 3: Review and Submit</h2>
-      <solar-button @button:click="submitInvoice">Submit Invoice</solar-button>
+      <!-- <solar-button @button:click="submitInvoice">Submit Invoice</solar-button> -->
       <hr />
 
       <div class="invoice-step-detail" id="invoice" ref="invoice">
@@ -230,6 +230,39 @@ export default class CreateInvoice extends Vue {
       return;
     }
     this.invoiceStep += 1;
+  }
+
+  addLineItem() {
+    const newItem: ILineItem = {
+      product: this.newItem.product,
+      quantity: Number(this.newItem.quantity.toString())
+    };
+
+    const existingItems = this.lineItems.map(item => item.product?.id);
+
+    if (
+      newItem != null &&
+      newItem.product != null &&
+      existingItems.includes(newItem.product.id)
+    ) {
+      const lineItem = this.lineItems.find(
+        item => item.product?.id === newItem.product?.id
+      );
+      if (lineItem != null) {
+        lineItem.quantity += newItem.quantity;
+      }
+    } else {
+      this.lineItems.push(newItem);
+    }
+    this.newItem = { product: undefined, quantity: 0 };
+  }
+
+  finalizeOrder() {
+    this.invoiceStep = 3;
+  }
+
+  submitInvoice() {
+    console.log("");
   }
 
   get canGoNext() {
