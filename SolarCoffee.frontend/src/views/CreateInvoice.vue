@@ -39,7 +39,9 @@
 
       <div class="invoice-item-actions">
         <solar-button
-          :disabled="!newItem.product || !newItem.quantity"
+          :disabled="
+            !newItem.product || !newItem.quantity || !newItem.quantity < 0
+          "
           @button:click="addLineItem"
         >
           Add Line Item
@@ -85,16 +87,16 @@
 
     <div class="invoice-step" v-if="invoiceStep === 3">
       <h2>Step 3: Review and Submit</h2>
-      <!-- <solar-button @button:click="submitInvoice">Submit Invoice</solar-button> -->
+      <solar-button @button:click="submitInvoice">Submit Invoice</solar-button>
       <hr />
 
       <div class="invoice-step-detail" id="invoice" ref="invoice">
         <div class="invoice-logo">
-          <!-- <img
+          <img
             id="imgLogo"
             alt="Solar Coffee logo"
-            src="../assets/images/solar_coffee_logo.png"
-          /> -->
+            src="../assets/images/logo.png"
+          />
           <h3>1337 Solar Lane</h3>
           <h3>San Somewhere, CA 90000</h3>
           <h3>USA</h3>
@@ -185,6 +187,8 @@ import { IInvoice, ILineItem } from "@/types/Invoice";
 import { IProductInventory } from "@/types/Product";
 import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "@/components/SolarButton.vue";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const customerService = new CustomerService();
 const inventoryService = new InventoryService();
@@ -209,6 +213,37 @@ export default class CreateInvoice extends Vue {
   inventory: IProductInventory[] = [];
   lineItems: ILineItem[] = [];
   newItem: ILineItem = { product: undefined, quantity: 0 };
+
+  get canGoNext() {
+    if (this.invoiceStep === 1) {
+      return this.selectedCustomerId !== 0;
+    }
+
+    if (this.invoiceStep === 2) {
+      return this.lineItems.length;
+    }
+
+    if (this.invoiceStep === 3) {
+      return false;
+    }
+
+    return false;
+  }
+
+  get canGoPrev() {
+    return this.invoiceStep !== 1;
+  }
+
+  get selectedCustomer() {
+    return this.customers.find(c => c.id == this.selectedCustomerId);
+  }
+
+  get runningTotal() {
+    return this.lineItems.reduce(
+      (a, b) => a + b["product"]!["price"] * b["quantity"],
+      0
+    );
+  }
 
   async initialize(): Promise<void> {
     customerService.getCustomers().then(res => (this.customers = res));
@@ -261,28 +296,41 @@ export default class CreateInvoice extends Vue {
     this.invoiceStep = 3;
   }
 
-  submitInvoice() {
-    console.log("");
+  async submitInvoice() {
+    this.invoice = {
+      customerId: this.selectedCustomerId,
+      lineItems: this.lineItems,
+      createdDate: new Date(),
+      updatedDate: new Date()
+    };
+    this.downloadPdf();
+    try {
+      const result = await invoiceService.createInvoice(this.invoice);
+      if (result) {
+        this.downloadPdf();
+        await this.$router.push("/orders");
+      }
+    } catch (error) {
+      console.log("error");
+    }
   }
 
-  get canGoNext() {
-    if (this.invoiceStep === 1) {
-      return this.selectedCustomerId !== 0;
+  downloadPdf() {
+    const pdf = new jsPDF("p", "pt", "a4", true);
+    const invoice = document.getElementById("invoice");
+    const width = invoice?.clientWidth ?? 0;
+    const height = invoice?.clientHeight ?? 0;
+
+    console.log(width);
+    console.log(height);
+
+    if (invoice != null) {
+      html2canvas(invoice).then(canvas => {
+        const image = canvas.toDataURL("image/png");
+        pdf.addImage(image, "PNG", 0, 0, width * 0.55, height * 0.55);
+        pdf.save("invoice");
+      });
     }
-
-    if (this.invoiceStep === 2) {
-      return true;
-    }
-
-    if (this.invoiceStep === 3) {
-      return false;
-    }
-
-    return false;
-  }
-
-  get canGoPrev() {
-    return this.invoiceStep !== 1;
   }
 
   startOver(): void {
